@@ -3,11 +3,11 @@ from utils import DatasetLoader
 
 class KNN:
     def __init__(self):
-        self.ds = DatasetLoader()
+        ds = DatasetLoader()
+        self.train_ds, self.test_ds = ds.get_cifar10_dataset(root="data")
 
     def test_knn(self):
-        self.ds.test_function()
-
+        print(self.train_ds)
 
 
 def main():
