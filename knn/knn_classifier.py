@@ -39,20 +39,37 @@ def model_selection(self, x, labels):
     best_p = 0
     best_k = 0
 
-    for k in range(1, 10):
+    for k in [1, 3, 5, 7, 10, 15, 30]:
         for p in [1, 2]:
             pred, knn_indices = self.predict(x, k=k, p=p)
             acc = accuracy(pred, labels)
             print("new accuracy: {}. p={}, k={}".format(acc, p, k))
+            '''
+            new accuracy: 0.3798. p=1, k=1
+            new accuracy: 0.3544. p=2, k=1
+            new accuracy: 0.3654. p=1, k=3
+            new accuracy: 0.3408. p=2, k=3
+            new accuracy: 0.373. p=1, k=5
+            new accuracy: 0.3354. p=2, k=5
+            new accuracy: 0.37. p=1, k=7
+            new accuracy: 0.3426. p=2, k=7
+            new accuracy: 0.3698. p=1, k=10
+            new accuracy: 0.3424. p=2, k=10
+            new accuracy: 0.3696. p=1, k=15
+            new accuracy: 0.3382. p=2, k=15
+            new accuracy: 0.3692. p=1, k=30
+            new accuracy: 0.3268. p=2, k=30
+
+            '''
             if acc > best_acc:
                 best_acc = acc
-                self.best_p = p
-                self.best_k = k
+                best_p = p
+                best_k = k
                 print("    found new best accuracy")
 
     end = timer()
     print(f"model selection required {end - start:.3f} seconds")
-    return best_p, best_k
+    return best_k, best_p
 
 
 def run_model(ds: Cifar10, best_k=MODEL_BEST_K, best_p=MODEL_BEST_P):
@@ -66,7 +83,8 @@ def run_model(ds: Cifar10, best_k=MODEL_BEST_K, best_p=MODEL_BEST_P):
 
     # Find best hyper-parameters
     if MODEL_LOOK_FOR_BEST_HPARAMS:
-        best_p, best_k = model_selection(knn_model, ds.validation_features, ds.validation_labels)
+        knn_model_selection = KnnClassifier(ds.train_features, ds.train_labels)
+        best_k, best_p = model_selection(knn_model_selection, ds.validation_features, ds.validation_labels)
 
     # Run on the test set and show the results
     pred, indices = knn_model.predict(ds.test_features, k=best_k, p=best_p)
@@ -98,7 +116,7 @@ def show_predictions(train_features, test_features, test_labels, knn_indices, pr
 
 def main():
     ds = Cifar10()
-    
+
     if MODEL_RUN_ON_DUMMY_DATASET:
         ds.init_dummy_features()
     else:
