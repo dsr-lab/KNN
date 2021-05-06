@@ -17,7 +17,6 @@ class KnnClassifier:
         for test_index in range(n_test):
             # take single element to classify
             test_vector = x_test[test_index, :]
-
             # compute distances based on train samples and test
             dists = torch.norm((self.x_train - test_vector), p=p, dim=1)
             # get k smallest distances
@@ -44,6 +43,7 @@ def model_selection(self, x, labels):
             pred, knn_indices = self.predict(x, k=k, p=p)
             acc = accuracy(pred, labels)
             print("new accuracy: {}. p={}, k={}".format(acc, p, k))
+
             '''
             new accuracy: 0.3798. p=1, k=1
             new accuracy: 0.3544. p=2, k=1
@@ -61,6 +61,7 @@ def model_selection(self, x, labels):
             new accuracy: 0.3268. p=2, k=30
 
             '''
+
             if acc > best_acc:
                 best_acc = acc
                 best_p = p
