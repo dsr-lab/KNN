@@ -1,6 +1,6 @@
 # KNN
 ### Introduction
-This is the very first project with the goal of solving some computer vision tasks by means of machine learning and deep learning techniques. 
+This is the very first project of a larger set, which has has the goal of solving some computer vision tasks by means of machine learning and deep learning techniques. 
 In particular, the goal of this tiny repository is to solve the classification problem by means of the knn algorithm
 
 ### Dataset
