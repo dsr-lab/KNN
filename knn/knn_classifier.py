@@ -59,7 +59,6 @@ def model_selection(self, x, labels):
             new accuracy: 0.3382. p=2, k=15
             new accuracy: 0.3692. p=1, k=30
             new accuracy: 0.3268. p=2, k=30
-
             '''
 
             if acc > best_acc:

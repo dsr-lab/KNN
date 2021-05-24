@@ -49,6 +49,7 @@ class Cifar10(DatasetLoader):
                                                      download=True)
         self.test_ds = torchvision.datasets.CIFAR10(root=root, train=False, transform=transforms.ToTensor())
 
+    # noinspection PyMethodMayBeStatic
     def __subset_to_matrix(self, dset, limit=None):
 
         # shape: (n_dataset, 3, 32, 32)
@@ -69,7 +70,12 @@ class Cifar10(DatasetLoader):
 
         return x, y
 
+    # noinspection PyMethodMayBeStatic
     def __dataset_to_matrix(self, dset, limit=None):
+        """
+
+        :rtype: torch.tensor
+        """
         x = torch.tensor(dset.data, dtype=torch.float32).permute(0, 3, 1, 2).div_(255)
         x = x.reshape((x.shape[0], -1))
         y = torch.tensor(dset.targets, dtype=torch.int64)
