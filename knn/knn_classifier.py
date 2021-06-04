@@ -82,7 +82,7 @@ def run_model(ds: Cifar10, best_k=MODEL_BEST_K, best_p=MODEL_BEST_P):
     knn_model = KnnClassifier(train_features, train_labels)
 
     # Find best hyper-parameters
-    if MODEL_LOOK_FOR_BEST_HPARAMS:
+    if MODEL_NEED_TRAINING:
         knn_model_selection = KnnClassifier(ds.train_features, ds.train_labels)
         best_k, best_p = model_selection(knn_model_selection, ds.validation_features, ds.validation_labels)
 
